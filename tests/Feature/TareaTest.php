@@ -47,4 +47,29 @@ class TareaTest extends TestCase
                     "autor"=> ["The autor field is required."],
             ]);
         }
+
+
+        public function test_ListOneGoodRequest(){
+            $response = $this->get('/api/v1/tarea/1');
+            
+            $response -> assertStatus(200);
+            $response->assertJsonStructure([
+                "titulo",
+                "contenido",
+                "estado",
+                "autor",
+                "created_at",
+                "updated_at",
+                "deleted_at"
+            ]);
+            $response -> assertJsonFragment([
+                "id"=> 1,
+                "deleted_at"=> null
+            ]);
+        }
+    
+        public function test_ListOneThatDoesntExist(){
+            $response = $this->get('/api/v1/tarea/1000');
+            $response -> assertStatus(404);
+        }
 }
