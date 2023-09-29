@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\tarea;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 class TareasController extends Controller
 {
 
@@ -131,5 +132,23 @@ class TareasController extends Controller
         }
     }
 
-    
+    public function Delete($id)
+    {
+        try {
+            DB::raw('LOCK TABLE tareas WRITE');
+            DB::beginTransaction();
+
+        $Tarea = tarea::findOrFail($id);  
+        $Tarea->delete(); 
+        return ["response" => "Object with ID $Tarea->id Deleted"];
+
+        }
+        catch (\Illuminate\Database\QueryException $th) {
+            DB::rollback();
+            return $th->getMessage();
+        }
+        catch (\PDOException $th) {
+            return response("Permission to DB denied",403);
+        }
+    }
 }

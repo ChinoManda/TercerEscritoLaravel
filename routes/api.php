@@ -10,5 +10,6 @@ Route::prefix('v1')->group(function(){
     Route::post("/tarea/{d}", [TareasController::class,"Edit"]);
     Route::get("/tarea/{d}", [TareasController::class,"ListOne"]);
     Route::get("/tarea", [TareasController::class,"ListAll"]);
+    Route::delete("/tarea/{d}", [TareasController::class,"Delete"]);
     });
     
