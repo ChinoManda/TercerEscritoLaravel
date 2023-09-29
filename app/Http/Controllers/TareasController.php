@@ -135,12 +135,12 @@ class TareasController extends Controller
     public function Delete($id)
     {
         try {
-            DB::raw('LOCK TABLE tareas WRITE');
-            DB::beginTransaction();
+        DB::raw('LOCK TABLE tareas WRITE');
+        DB::beginTransaction();
 
-        $Tarea = tarea::findOrFail($id);  
-        $Tarea->delete(); 
-        return ["response" => "Object with ID $Tarea->id Deleted"];
+         $Tarea = tarea::findOrFail($id);  
+         $Tarea->delete(); 
+         return ["response" => "Object with ID $Tarea->id Deleted"];
 
         }
         catch (\Illuminate\Database\QueryException $th) {
