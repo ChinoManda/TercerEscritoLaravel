@@ -43,4 +43,8 @@ class TareasController extends Controller
         $Tarea = tarea::findOrFail($id);
         return $Tarea;
     }
+
+    public function ListAll(){
+        return tarea::all();
+    }
 }
