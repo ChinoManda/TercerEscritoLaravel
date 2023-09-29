@@ -8,17 +8,17 @@ use Illuminate\Support\Facades\Validator;
 class TareasController extends Controller
 {
 
-    public function CreateTarea(Request $request){
+    public function Create(Request $request){
         
         $validation = self::CreateTareaValidation($request);
 
         if ($validation->fails())
         return $validation->errors();
     
-        return $this -> CreateTareaRequest($request);
+        return $this -> CreateRequest($request);
     }
 
-    public function CreateTareaValidation(Request $request){
+    public function CreateValidation(Request $request){
         $validation = Validator::make($request->all(),[
             'titulo' => 'required | string ',
             'contenido' => 'required | string',
@@ -28,7 +28,7 @@ class TareasController extends Controller
         return $validation;    
     }
 
-    public function CreateTareaRequest (Request $request){
+    public function CreateRequest (Request $request){
         $Tarea = new tarea();
         
         $Tarea -> titulo = $request ->post("titulo"); 
@@ -36,6 +36,11 @@ class TareasController extends Controller
         $Tarea -> estado = $request ->post("estado");
         $Tarea -> autor = $request ->post("autor");
         $Tarea -> save();       
+        return $Tarea;
+    }
+
+    public function ListOne($id){
+        $Tarea = tarea::findOrFail($id);
         return $Tarea;
     }
 }
